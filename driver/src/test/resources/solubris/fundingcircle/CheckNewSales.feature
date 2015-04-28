@@ -1,12 +1,12 @@
 Feature: Check For New Sales
 
-  Background:
-    Given i enter email and password
-    Given i answer the secret question
+#  @Implemented
+  Scenario Outline: login with profile
+    Given i open funding circle
+    Given i enter email and password for "<profile>"
+    Given i answer the secret question for "<profile>"
     Given i accept the conditions
 
-  @Implemented
-  Scenario: send email for new sales
     Given i goto sell view
     Given i goto loan parts sold view
     Given i sort by time sold desc
@@ -14,3 +14,8 @@ Feature: Check For New Sales
     Given if found, send an email notification for remembered parts
     Given save remembered parts for next time
     Given a break point
+
+    Examples:
+      | profile   |
+      |  tim      |
+      |  solubris |

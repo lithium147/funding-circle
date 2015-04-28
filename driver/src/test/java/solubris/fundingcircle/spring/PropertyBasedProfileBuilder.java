@@ -2,6 +2,7 @@ package solubris.fundingcircle.spring;
 
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.support.ResourcePropertySource;
 
 import java.io.IOException;
@@ -17,15 +18,22 @@ public class PropertyBasedProfileBuilder {
         this.environment = environment;
         if(!environment.getPropertySources().contains(PROFILE_PROPERTIES)) {
             environment.getPropertySources().addLast(
-                    createPropertySourceFor(DEFAULT_PROPERTIES)
+                    classPathPropertySourceFor(DEFAULT_PROPERTIES)
             );
         }
     }
 
-    private static ResourcePropertySource createPropertySourceFor(String name) throws IOException {
+    private static ResourcePropertySource classPathPropertySourceFor(String name) throws IOException {
         return new ResourcePropertySource(
                 PROFILE_PROPERTIES,
                 new ClassPathResource("META-INF/profile/" + name + ".properties")
+        );
+    }
+
+    private static ResourcePropertySource privatePropertySourceFor(String name) throws IOException {
+        return new ResourcePropertySource(
+                PROFILE_PROPERTIES,
+                new FileSystemResource(System.getProperty("user.home") + "/private/funding-circle/" + name + ".properties")
         );
     }
 
@@ -37,7 +45,7 @@ public class PropertyBasedProfileBuilder {
     public Profile build() throws IOException {
         environment.getPropertySources().replace(
                 PROFILE_PROPERTIES,
-                createPropertySourceFor(name)
+                privatePropertySourceFor(name)
         );
         return new ProfileImpl();
     }
