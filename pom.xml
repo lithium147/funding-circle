@@ -44,15 +44,7 @@
         <selenium.version>2.41.0</selenium.version>
         <h2.version>1.3.167</h2.version>
 
-        <broadway.version>2.34</broadway.version>
-        <cucumber.version>1.1.8</cucumber.version>
-
-
-        <tomcat.port>8087</tomcat.port>
-        <tomcat.shutdown.port>9087</tomcat.shutdown.port>
-        <tomcat.version>7.0.35</tomcat.version>
-        <tomcat.log4j>file:///${main.basedir}/acceptanceTests/functionaltest-groovy/src/test/resources/log4j.xml</tomcat.log4j>
-        <tomcat.memory>-Xms256m -Xmx512m</tomcat.memory>
+        <cucumber.version>1.2.2</cucumber.version>
 
     </properties>
 
@@ -61,6 +53,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
                 <version>${spring.version}</version>
             </dependency>
             <dependency>
@@ -447,97 +444,8 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.4</version>
-                    <configuration>
-                        <archive>
-                            <manifestEntries>
-                                <Maven-Build-Number>${buildNumber}</Maven-Build-Number>
-                                <Build-Number>${BUILD_NUMBER}:</Build-Number>
-                                <Build-Tag>${BUILD_TAG}:</Build-Tag>
-                                <Git-Commit>${GIT_COMMIT}</Git-Commit>
-                                <Git-Tag>${PM_GIT_TAG}</Git-Tag>
-                            </manifestEntries>
-                        </archive>
-
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <version>2.1.1</version>
-                    <executions>
-                        <execution>
-                            <id>generate-manifest</id>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>manifest</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <archive>
-                            <manifest>
-                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                                <addClasspath>true</addClasspath>
-                            </manifest>
-                            <!-- these env vars come from hudson and we want them in the manifest -->
-                            <manifestEntries>
-                                <Maven-Pom-Version>${project.version}</Maven-Pom-Version>
-                                <Build-Number>${BUILD_NUMBER}:</Build-Number>
-                                <Build-Tag>${BUILD_TAG}:</Build-Tag>
-                                <Git-Commit>${GIT_COMMIT}</Git-Commit>
-                                <Git-Tag>${PM_GIT_TAG}</Git-Tag>
-                            </manifestEntries>
-                        </archive>
-                        <attachClasses>true</attachClasses>
-                        <classesClassifier>classes</classesClassifier>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>com.googlecode.t7mp</groupId>
-                    <artifactId>maven-t7-plugin</artifactId>
-                    <version>0.9.8.M2A</version>
-                    <configuration>
-                        <tomcatHttpPort>${tomcat.port}</tomcatHttpPort>
-                        <tomcatShutdownPort>${tomcat.shutdown.port}</tomcatShutdownPort>
-                        <tomcatShutdownCommand>SHUTDOWN</tomcatShutdownCommand>
-                        <tomcatVersion>${tomcat.version}</tomcatVersion>
-                        <tomcatSetAwait>true</tomcatSetAwait>
-                        <tomcatConfigDirectory>${basedir}/src/main/tomcat/conf</tomcatConfigDirectory>
-                        <lookInside>false</lookInside>
-                        <systemProperties>
-                            <systemProperty>
-                                <key>log4j.configuration</key>
-                                <value>${tomcat.log4j}</value>
-                            </systemProperty>
-                            <systemProperty>
-                                <key>OATC_ENV</key>
-                                <value>${system.property.env.value}</value>
-                            </systemProperty>
-                        </systemProperties>
-                        <webapps>
-                            <webappArtifact>
-                                <groupId>${project.groupId}</groupId>
-                                <artifactId>webapp</artifactId>
-                                <version>${project.version}</version>
-                                <contextPath>moments</contextPath>
-                            </webappArtifact>
-                        </webapps>
-                        <!--<libs>-->
-                            <!--<jarArtifact>-->
-
-                            <!--</jarArtifact>-->
-                        <!--</libs>-->
-
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>2.16</version>
+                    <version>2.18.1</version>
                     <executions>
                         <execution>
                             <goals>
@@ -592,46 +500,5 @@
             </plugin>
         </plugins>
     </build>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>pm-plugin-repo</id>
-            <url>http://nexus.equalexperts.com/content/groups/public</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <repositories>
-        <repository>
-            <id>pm-repo</id>
-            <url>http://nexus.equalexperts.com/content/groups/public</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-    </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>nexus</id>
-            <name>PM Nexus</name>
-            <url>http://nexus.equalexperts.com/content/repositories/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus</id>
-            <name>PM Nexus</name>
-            <url>http://nexus.equalexperts.com/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
 
 </project>

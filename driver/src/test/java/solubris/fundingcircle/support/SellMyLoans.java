@@ -4,6 +4,7 @@ import cucumber.api.java.ca.Cal;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import solubris.fundingcircle.selenium.Waiter;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -37,7 +38,9 @@ public class SellMyLoans {
     }
 
     public void clickSellIndividually() throws InterruptedException {
-        driver.findElement(By.xpath("//a[contains(text(),'Sell Individually')]")).click();
+        WebElement element = driver.findElement(By.xpath("//a[contains(text(),'Sell Individually')]"));
+//        new Waiter(driver).clickAndWaitForAjaxToComplete(element);
+        element.click();
         Thread.sleep(5000);
         driver.switchTo().frame(getIframe(driver, "sell-individual-loan-parts"));
 //        driver.switchTo().frame("sell-individual-loan-parts");

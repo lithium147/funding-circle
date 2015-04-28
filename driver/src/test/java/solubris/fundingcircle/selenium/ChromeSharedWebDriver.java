@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
  * the life of the JVM.
  * </p>
  */
-@Component
+//@Component
 public class ChromeSharedWebDriver extends EventFiringWebDriver {
     private static final WebDriver REAL_DRIVER = initDriver();
     private static final Thread CLOSE_THREAD = new Thread() {

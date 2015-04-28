@@ -25,7 +25,7 @@ import static org.hamcrest.CoreMatchers.not;
  * for spring setup followed this:
  * http://techblog.kataru.nl/?p=121
  */
-//@ContextConfiguration("classpath:META-INF/spring/applicationContext.xml")
+//@ContextConfiguration("classpath:META-INF/spring/applicationContext.xmllll")
 @ContextConfiguration(classes = AppConfig.class)
 public class RootSteps extends BaseSteps {
 
