@@ -194,14 +194,6 @@ public class RootSteps extends BaseSteps {
         transferMoney.clickTransferOut();
     }
 
-    @Given("^i have available funds greater than £(\\d+)$")
-    public void i_have_available_funds_greater_than_£(int amount) throws Throwable {
-        TransferMoney transferMoney = new TransferMoney(this);
-        transferMoney.clickTransferOut();
-        MyLending myLending = new MyLending(this);
-        assertThat(myLending.determineAvailableFunds()).isGreaterThan(amount);
-    }
-
     @When("^i enter the available funds in the amount$")
     public void i_enter_the_available_funds_in_the_amount() throws Throwable {
         TransferMoney transferMoney = new TransferMoney(this);
@@ -228,5 +220,11 @@ public class RootSteps extends BaseSteps {
     public void i_have_available_funds_equal_to_£(long amount) throws Throwable {
         MyLending myLending = new MyLending(this);
         assertThat(myLending.determineAvailableFunds()).isEqualTo(amount);
+    }
+
+    @Given("^i have available funds between £(\\d+) and £(\\d+)$")
+    public void i_have_available_funds_between_£_and_£(int min, int max) throws Throwable {
+        MyLending myLending = new MyLending(this);
+        assertThat(myLending.determineAvailableFunds()).isGreaterThan(min).isLessThan(max);
     }
 }
