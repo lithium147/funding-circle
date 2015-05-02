@@ -4,7 +4,7 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import solubris.fundingcircle.CukeRunner;
+import solubris.fundingcircle.cucumber.CukeRunner;
 
 /**
  * Created by eeo2 on 16/09/2014.

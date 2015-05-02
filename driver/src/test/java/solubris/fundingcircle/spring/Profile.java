@@ -12,6 +12,10 @@ public interface Profile {
 
     String[] getAnswers();
 
+    default String getQuestion(int i) {
+        return getQuestions()[i];
+    }
+
     default String getAnswer(int i) {
         return getAnswers()[i];
     }

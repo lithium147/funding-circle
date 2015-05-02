@@ -1,16 +1,4 @@
-package solubris.fundingcircle.selenium;
-
-import cucumber.api.Scenario;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.springframework.stereotype.Component;
-
-import java.util.concurrent.TimeUnit;
+package solubris.fundingcircle.selenium.driver;
 
 /**
  * <p>
@@ -70,7 +58,7 @@ public class FirefoxSharedWebDriver { //extends EventFiringWebDriver {
 //    @Override
 //    public void close() {
 //        if (Thread.currentThread() != CLOSE_THREAD) {
-//            throw new UnsupportedOperationException("You shouldn't close this WebDriver. It's shared and will close when the JVM exits.");
+//            throw new UnsupportedOperationException("You shouldn't close this WebDriver. It'selenium shared and will close when the JVM exits.");
 //        }
 //        super.close();
 //    }

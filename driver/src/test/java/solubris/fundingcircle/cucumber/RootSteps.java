@@ -1,4 +1,4 @@
-package solubris.fundingcircle.steps;
+package solubris.fundingcircle.cucumber;
 
 import com.google.common.base.Joiner;
 import cucumber.api.PendingException;
@@ -7,11 +7,13 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import solubris.fundingcircle.util.MailService;
 import solubris.fundingcircle.spring.AppConfig;
 import solubris.fundingcircle.spring.Profile;
-import solubris.fundingcircle.support.*;
+import solubris.fundingcircle.selenium.control.*;
 import solubris.fundingcircle.util.BaseSteps;
 
 import java.util.List;
@@ -25,7 +27,6 @@ import static org.hamcrest.CoreMatchers.not;
  * for spring setup followed this:
  * http://techblog.kataru.nl/?p=121
  */
-//@ContextConfiguration("classpath:META-INF/spring/applicationContext.xmllll")
 @ContextConfiguration(classes = AppConfig.class)
 public class RootSteps extends BaseSteps {
 
@@ -34,6 +35,14 @@ public class RootSteps extends BaseSteps {
 
 //    @Autowired
     MailService mailService;
+
+    @Autowired
+    private WebDriver driver;
+
+    @Override
+    public WebDriver getWebDriver() {
+        return driver;
+    }
 
 //    @Autowired
 //    public RootSteps() {
@@ -131,7 +140,7 @@ public class RootSteps extends BaseSteps {
     @Given("^there are items to sell$")
     public void there_are_items_to_sell() throws Throwable {
         SellMyLoans sellMyLoans = new SellMyLoans(this);
-        assertThat(sellMyLoans.determineRowCount()).isNotEqualTo(0);
+        assertThat(sellMyLoans.determineRowCount()).isNotEqualTo(0).as("There must be items to sell");
     }
 
     @Given("^i goto loan parts sold view$")
@@ -225,6 +234,6 @@ public class RootSteps extends BaseSteps {
     @Given("^i have available funds between £(\\d+) and £(\\d+)$")
     public void i_have_available_funds_between_£_and_£(int min, int max) throws Throwable {
         MyLending myLending = new MyLending(this);
-        assertThat(myLending.determineAvailableFunds()).isGreaterThan(min).isLessThan(max);
+        assertThat(myLending.determineAvailableFunds()).isGreaterThan(min).isLessThan(max).as("Must have available funds");
     }
 }

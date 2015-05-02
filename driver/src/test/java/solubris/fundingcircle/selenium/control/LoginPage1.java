@@ -1,7 +1,8 @@
-package solubris.fundingcircle.support;
+package solubris.fundingcircle.selenium.control;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
 public class LoginPage1 {
 	private final WebDriver driver;

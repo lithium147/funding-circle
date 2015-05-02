@@ -1,8 +1,9 @@
-package solubris.fundingcircle.support;
+package solubris.fundingcircle.selenium.control;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
 /**
  * Created by eeo2 on 14/09/2014.

@@ -1,4 +1,4 @@
-package solubris.fundingcircle;
+package solubris.fundingcircle.cucumber;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         format = "html:target/surefire-reports",
         strict = true,
+        glue = "solubris.fundingcircle.cucumber",
         tags = "@Implemented"
 )
 //, features={"classpath:solubris/fundingcircle/CheckNewSales.feature"})

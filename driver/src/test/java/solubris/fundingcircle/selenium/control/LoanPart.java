@@ -1,4 +1,4 @@
-package solubris.fundingcircle.support;
+package solubris.fundingcircle.selenium.control;
 
 import java.util.Date;
 

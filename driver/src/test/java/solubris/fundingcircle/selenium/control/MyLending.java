@@ -1,10 +1,10 @@
-package solubris.fundingcircle.support;
+package solubris.fundingcircle.selenium.control;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
 /**

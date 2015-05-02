@@ -1,4 +1,4 @@
-package solubris.fundingcircle.selenium;
+package solubris.fundingcircle.selenium.driver;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -7,9 +7,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -33,10 +31,10 @@ import java.util.concurrent.TimeUnit;
  * the life of the JVM.
  * </p>
  */
-//@Component
-public class ChromeSharedWebDriver extends EventFiringWebDriver {
-    private static final WebDriver REAL_DRIVER = initDriver();
-    private static final Thread CLOSE_THREAD = new Thread() {
+// Non public class so it is not auto created by cucumber
+class ChromeSharedWebDriver extends EventFiringWebDriver {
+    private final WebDriver REAL_DRIVER;
+    private final Thread CLOSE_THREAD = new Thread() {
         @Override
         public void run() {
             REAL_DRIVER.close();
@@ -45,7 +43,7 @@ public class ChromeSharedWebDriver extends EventFiringWebDriver {
     public static final int WIDTH = 320*4;
     public static final int HEIGHT = 480*2;
 
-    public static WebDriver initDriver() {
+    private static WebDriver initDriver() {
 //        URL firefoxProfileDir = SharedWebDriver.class.getClassLoader().getResource(PROFILE_LOCATION);
 //        File profileDir = new File(firefoxProfileDir.getPath());
 //        FirefoxProfile firefoxProfile = new FirefoxProfile(profileDir);
@@ -64,18 +62,22 @@ public class ChromeSharedWebDriver extends EventFiringWebDriver {
         return driver;
     }
 
-    static {
-        Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
+    public static WebDriver aWebDriver() {
+        WebDriver webDriver = initDriver();
+
+        return new ChromeSharedWebDriver(webDriver);
     }
 
-    public ChromeSharedWebDriver() {
-        super(REAL_DRIVER);
+    private ChromeSharedWebDriver(WebDriver webDriver) {
+        super(webDriver);
+        REAL_DRIVER = webDriver;
+        Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
     }
 
     @Override
     public void close() {
         if (Thread.currentThread() != CLOSE_THREAD) {
-            throw new UnsupportedOperationException("You shouldn't close this WebDriver. It's shared and will close when the JVM exits.");
+            throw new UnsupportedOperationException("You shouldn't close this WebDriver. It'selenium shared and will close when the JVM exits.");
         }
         super.close();
     }
