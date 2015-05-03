@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class IframeExistsCondition implements ExpectedCondition<WebElement> {
+public class IFrameExistsCondition implements ExpectedCondition<WebElement> {
     private static final Logger logger = LoggerFactory.getLogger(AjaxConnectionsCondition.class);
 
     private final String id;
 
-    public IframeExistsCondition(String id) {
+    public IFrameExistsCondition(String id) {
         this.id = id;
     }
 
