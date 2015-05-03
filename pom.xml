@@ -11,6 +11,9 @@
     <modules>
         <module>driver</module>
     </modules>
+    <prerequisites>
+        <maven>3.0.4</maven>
+    </prerequisites>
 
     <properties>
         <main.basedir>${project.basedir}</main.basedir>
@@ -22,14 +25,14 @@
         <jackson.version>1.9.13</jackson.version>
 
         <mongodb.version>2.12.3</mongodb.version>
-        <groovy.version>1.8.8</groovy.version>
+        <groovy.version>2.4.3</groovy.version>
         <gmock.version>0.8.3</gmock.version>
         <spring.version>4.1.6.RELEASE</spring.version>
         <spring-security.version>4.0.0.RELEASE</spring-security.version>
         <aspectj.version>1.6.3.RELEASE</aspectj.version>
-        <junit.version>4.11</junit.version>
+        <junit.version>4.12</junit.version>
         <jetty.version>7.2.2.v20101205</jetty.version>
-        <selenium.version>2.41.0</selenium.version>
+        <selenium.version>2.45.0</selenium.version>
         <h2.version>1.3.167</h2.version>
 
         <cucumber.version>1.2.2</cucumber.version>
@@ -79,114 +82,47 @@
                 <version>${spring.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjrt</artifactId>
-                <version>1.6.12</version>
+                <version>1.8.5</version>
             </dependency>
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
-                <version>1.6.12</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.tomcat</groupId>
-                <artifactId>tomcat-servlet-api</artifactId>
-                <version>7.0.6</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.velocity</groupId>
-                <artifactId>velocity</artifactId>
-                <version>1.7</version>
+                <version>1.8.5</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-mapper-asl</artifactId>
-                <version>1.9.9</version>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-core-asl</artifactId>
-                <version>1.9.9</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sun.jersey</groupId>
-                <artifactId>jersey-client</artifactId>
-                <version>1.15</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sun.jersey</groupId>
-                <artifactId>jersey-core</artifactId>
-                <version>1.15</version>
-            </dependency>
-
-            <dependency>
-                <groupId>solubris.o2</groupId>
-                <artifactId>broadway</artifactId>
-                <version>${broadway.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>solubris.o2</groupId>
-                <artifactId>broadway-environment</artifactId>
-                <version>${broadway.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>solubris.o2</groupId>
-                <artifactId>broadway-device-wurfl</artifactId>
-                <version>${broadway.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.sourceforge.wurfl</groupId>
-                <artifactId>wurfl</artifactId>
-                <version>1.3.1.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.scribe</groupId>
-                <artifactId>scribe</artifactId>
-                <version>1.3.3</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-httpclient</groupId>
-                <artifactId>commons-httpclient</artifactId>
-                <version>3.1</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.2.2</version>
-            </dependency>
             <dependency>
                 <groupId>commons-logging</groupId>
                 <artifactId>commons-logging</artifactId>
-                <version>1.1.1</version>
+                <version>1.2</version>
             </dependency>
             <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
-                <version>2.1</version>
+                <version>2.7</version>
             </dependency>
             <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
-                <version>1.2.14</version>
+                <version>1.2.17</version>
             </dependency>
             <dependency>
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
-                <version>1.7</version>
+                <version>1.10</version>
             </dependency>
 
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -204,7 +140,7 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>1.8.5</version>
+                <version>2.0.7-beta</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -223,7 +159,7 @@
             <dependency>
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
-                <version>6.8.8</version>
+                <version>6.8.21</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -248,19 +184,6 @@
                 <groupId>org.easytesting</groupId>
                 <artifactId>fest-assert-core</artifactId>
                 <version>2.0M10</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.codehaus.groovy</groupId>
-                <artifactId>groovy-all</artifactId>
-                <version>${groovy.version}</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>org.mongodb</groupId>
-                <artifactId>mongo-java-driver</artifactId>
-                <version>2.12.3</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -294,15 +217,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.4</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <version>1.1.8</version>
+            <version>1.2.2</version>
         </dependency>
     </dependencies>
 
@@ -312,7 +229,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.1</version>
+                    <version>3.3</version>
                     <configuration>
                         <source>1.8</source>
                         <target>1.8</target>
@@ -323,7 +240,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-report-plugin</artifactId>
-                    <version>2.12.4</version>
+                    <version>2.18.1</version>
                     <configuration>
                         <outputDirectory>
                             ${project.build.directory}/surefire-reports
@@ -342,7 +259,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.12.4</version>
+                    <version>2.18.1</version>
                     <configuration>
                         <forkMode>always</forkMode>
                         <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
@@ -408,12 +325,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>buildnumber-maven-plugin</artifactId>
-                    <version>1.1</version>
-                </plugin>
-
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>2.18.1</version>
@@ -438,21 +349,17 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
-                    <version>2.3.1</version>
+                    <version>2.5.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>cobertura-maven-plugin</artifactId>
-                    <version>2.5.1</version>
+                    <version>2.7</version>
                     <configuration>
                         <aggregate>true</aggregate>
                         <instrumentation>
                             <excludes>
                                 <exclude>org/openqa/selenium/htmlunit/*.class</exclude>
-                                <exclude>uk/co/o2/pm/legacy/Base64*.class</exclude>
-                                <exclude>uk/co/o2/pm/util/Base64*.class</exclude>
-                                <exclude>uk/co/o2/pm/ws/**/*.class</exclude>
-                                <exclude>uk/co/o2/soa/**/*.class</exclude>
                             </excludes>
                         </instrumentation>
                     </configuration>
@@ -468,8 +375,28 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
             </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.2</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>dependency-updates-report</report>
+                            <report>plugin-updates-report</report>
+                            <report>property-updates-report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>
