@@ -21,7 +21,7 @@ class AjaxConnectionsCondition implements ExpectedCondition<Boolean> {
     @Override
     public Boolean apply(WebDriver driver) {
         long activeConnections = (Long)((JavascriptExecutor) driver).executeScript("return jQuery.active");
-        logger.trace("activeConnections = {}", activeConnections);
+        logger.debug("activeConnections = {}", activeConnections);
         return activeConnections == expectedActiveConnections;
     }
 }

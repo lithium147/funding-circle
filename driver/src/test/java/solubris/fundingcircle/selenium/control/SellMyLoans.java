@@ -3,6 +3,8 @@ package solubris.fundingcircle.selenium.control;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import solubris.fundingcircle.selenium.IFrameExistsCondition;
 import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
 import java.text.DecimalFormat;
@@ -13,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static solubris.fundingcircle.selenium.Waiter.aWaiter;
 
 /**
  * Created by eeo2 on 14/09/2014.
@@ -24,23 +27,16 @@ public class SellMyLoans {
         driver = provider.getWebDriver();
     }
 
-    private WebElement getIframe(final WebDriver driver, final String id) {
-        final List<WebElement> iframes = driver.findElements(By.tagName("iframe"));
-        for (WebElement iframe : iframes) {
-            if (iframe.getAttribute("id").equals(id)) {
-                return iframe;
-            }
-        }
-
-        return null;
-    }
-
     public void clickSellIndividually() throws InterruptedException {
         WebElement element = driver.findElement(By.xpath("//a[contains(text(),'Sell Individually')]"));
-//        new Waiter(driver).clickAndWaitForAjaxToComplete(element);
-        element.click();
-        Thread.sleep(5000);
-        driver.switchTo().frame(getIframe(driver, "sell-individual-loan-parts"));
+        IFrameExistsCondition iFrameExistsCondition = new IFrameExistsCondition("sell-individual-loan-parts");
+        WebElement sellLoanPartsFrame = aWaiter(driver).clickAndWaitForCondition(element, iFrameExistsCondition);
+        driver.switchTo().frame(sellLoanPartsFrame);
+
+//        WebElement parent = element.findElement(By.xpath(".."));
+//        WebElement iframeWrapper = driver.findElement(By.id("sellable_bids"));
+//        aWaiter(driver).clickAndWaitForCondition(element, driver -> "active".equals(parent.getAttribute("class")));
+//        aWaiter(driver).clickAndWaitForCondition(element, driver -> "active".equals(iframeWrapper.getAttribute("class")));
 //        driver.switchTo().frame("sell-individual-loan-parts");
 //        driver.switchTo().frame(1);
     }

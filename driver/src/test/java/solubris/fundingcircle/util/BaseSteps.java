@@ -1,14 +1,18 @@
 package solubris.fundingcircle.util;
 
+import org.openqa.selenium.WebDriver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 import solubris.fundingcircle.selenium.driver.WebDriverProvider;
+import solubris.fundingcircle.spring.AppConfig;
 
-/**
- * Created by eeo2 on 12/09/2014.
- */
+@ContextConfiguration(classes = AppConfig.class)
 public abstract class BaseSteps implements WebDriverProvider {
 
-//    public BaseSteps(SharedWebDriver driver) {
-//        super(driver);
-//    }
+    @Autowired
+    protected WebDriver driver;
 
+    public WebDriver getWebDriver() {
+        return driver;
+    }
 }

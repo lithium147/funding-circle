@@ -6,8 +6,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import solubris.fundingcircle.selenium.control.MyLending;
+import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -25,6 +28,10 @@ public class Waiter {
     public Waiter(WebDriver driver) {
         this.driver = driver;
         driverWait = new WebDriverWait(driver, 10, 100);
+    }
+
+    public Waiter(WebDriverProvider webDriverProvider) {
+        this(webDriverProvider.getWebDriver());
     }
 
     public WebElement findVisibileWebElement(By by) {
@@ -97,6 +104,14 @@ public class Waiter {
         driverWait.withTimeout(20, TimeUnit.SECONDS).until(condition);
     }
 
+    public void clickAndWaitForNewBody(WebElement elementToClick) {
+        ChangingReferenceCondition condition = new ChangingReferenceCondition(By.tagName("body"));
+        condition.prepare(driver);
+
+        elementToClick.click();
+        driverWait.withTimeout(20, TimeUnit.SECONDS).until(condition);
+    }
+
     public void clickAndWaitForAjaxToComplete(WebElement elementToClick) {
         elementToClick.click();
 
@@ -108,5 +123,27 @@ public class Waiter {
         driverWait.withTimeout(20, TimeUnit.SECONDS).until(condition);
         condition = new AjaxConnectionsCondition(0);
         driverWait.withTimeout(20, TimeUnit.SECONDS).until(condition);
+    }
+
+    public static Waiter aWaiter(WebDriver driver) {
+        return new Waiter(driver);
+    }
+
+    public void clickAndWaitForNewElement(WebElement elementToClick, By xpathThatWillChange) {
+        ChangingReferenceCondition condition = new ChangingReferenceCondition(xpathThatWillChange);
+        condition.prepare(driver);
+
+        elementToClick.click();
+        driverWait.withTimeout(20, TimeUnit.SECONDS).until(condition);
+    }
+
+    public void clickAndWaitForCondition(WebElement elementToClick, Predicate<WebDriver> predicate) {
+        elementToClick.click();
+        driverWait.withTimeout(20, TimeUnit.SECONDS).until(predicate);
+    }
+
+    public WebElement clickAndWaitForCondition(WebElement elementToClick, ExpectedCondition<WebElement> condition) {
+        elementToClick.click();
+        return driverWait.withTimeout(20, TimeUnit.SECONDS).until(condition);
     }
 }

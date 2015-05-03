@@ -21,18 +21,6 @@
         <jersey.version>1.18</jersey.version>
         <jackson.version>1.9.13</jackson.version>
 
-        <offerManager.version>4.0.1-SNAPSHOT</offerManager.version>
-        <soaclient.version>1.0.4-SNAPSHOT</soaclient.version>
-
-        <storeroom.version>1.0.4-SNAPSHOT</storeroom.version>
-        <loadingbay.version>${storeroom.version}</loadingbay.version>
-        <export.version>${storeroom.version}</export.version>
-        <lbclient.version>1.0.2-SNAPSHOT</lbclient.version>
-
-        <gos.version>1.1.1-SNAPSHOT</gos.version>
-        <global.domain.version>${gos.version}</global.domain.version>
-        <rsa.version>${gos.version}</rsa.version>
-
         <mongodb.version>2.12.3</mongodb.version>
         <groovy.version>1.8.8</groovy.version>
         <gmock.version>0.8.3</gmock.version>
@@ -275,22 +263,31 @@
                 <version>2.12.3</version>
                 <scope>test</scope>
             </dependency>
-
-
-
-<!-- for future use
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.1.3</version>
+            </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <scope>provided</scope>
+                <version>1.7.12</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <scope>provided</scope>
-            </dependency>
--->
+
+            <!-- for future use
+                        <dependency>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-api</artifactId>
+                            <scope>provided</scope>
+                        </dependency>
+
+                        <dependency>
+                            <groupId>org.slf4j</groupId>
+                            <artifactId>slf4j-log4j12</artifactId>
+                            <scope>provided</scope>
+                        </dependency>
+            -->
 
         </dependencies>
     </dependencyManagement>
@@ -321,32 +318,6 @@
                         <target>1.8</target>
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.gmaven</groupId>
-                    <artifactId>gmaven-plugin</artifactId>
-                    <version>1.4</version>
-                    <configuration>
-                        <providerSelection>1.8</providerSelection>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.codehaus.gmaven.runtime</groupId>
-                            <artifactId>gmaven-runtime-1.8</artifactId>
-                            <version>1.4</version>
-                            <exclusions>
-                                <exclusion>
-                                    <groupId>org.codehaus.groovy</groupId>
-                                    <artifactId>groovy-all</artifactId>
-                                </exclusion>
-                            </exclusions>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.codehaus.groovy</groupId>
-                            <artifactId>groovy-all</artifactId>
-                            <version>${groovy.version}</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
 
                 <plugin>

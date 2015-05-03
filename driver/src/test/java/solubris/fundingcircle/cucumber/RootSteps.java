@@ -2,11 +2,14 @@ package solubris.fundingcircle.cucumber;
 
 import com.google.common.base.Joiner;
 import cucumber.api.PendingException;
+import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,7 +30,6 @@ import static org.hamcrest.CoreMatchers.not;
  * for spring setup followed this:
  * http://techblog.kataru.nl/?p=121
  */
-@ContextConfiguration(classes = AppConfig.class)
 public class RootSteps extends BaseSteps {
 
     @Autowired
@@ -36,13 +38,7 @@ public class RootSteps extends BaseSteps {
 //    @Autowired
     MailService mailService;
 
-    @Autowired
-    private WebDriver driver;
-
-    @Override
-    public WebDriver getWebDriver() {
-        return driver;
-    }
+    List<LoanPart> newlySoldParts;
 
 //    @Autowired
 //    public RootSteps() {
@@ -84,7 +80,6 @@ public class RootSteps extends BaseSteps {
     public void i_goto_sell_view() throws Throwable {
         MyLending myLending = new MyLending(this);
         myLending.clickSell();
-        Thread.sleep(5000);
     }
 
     @Given("^i goto sell individually view$")
@@ -158,12 +153,6 @@ public class RootSteps extends BaseSteps {
         Thread.sleep(1000);
     }
 
-    List<LoanPart> newlySoldParts;
-
-    @Given("^a break point$")
-    public void a_break_point() throws Throwable {
-    }
-
     @Given("^i remember newly sold parts that have not been seen before$")
     public void i_remember_newly_sold_parts_that_have_not_been_seen_before() throws Throwable {
         SellMyLoans sellMyLoans = new SellMyLoans(this);
@@ -185,16 +174,16 @@ public class RootSteps extends BaseSteps {
 
     @After
     public void i_logout() throws Throwable {
-        MyLending myLending = new MyLending(this);
-        myLending.clickSubMenu();
-        myLending.clickLogout();
+        driver.manage().deleteAllCookies();
+//        MyLending myLending = new MyLending(this);
+//        myLending.clickSubMenu();
+//        myLending.clickLogout();
     }
 
     @Given("^i goto transfer money$")
     public void i_goto_transfer_money() throws Throwable {
         MyLending myLending = new MyLending(this);
         myLending.clickTransferMoney();
-        Thread.sleep(5000);
     }
 
     @Given("^i goto transfer out$")

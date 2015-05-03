@@ -3,13 +3,13 @@ package solubris.fundingcircle.selenium.control;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import solubris.fundingcircle.selenium.Waiter;
 import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
 import java.util.List;
 
-/**
- * Created by eeo2 on 14/09/2014.
- */
+import static solubris.fundingcircle.selenium.Waiter.aWaiter;
+
 public class MyLending {
     private final WebDriver driver;
 
@@ -25,7 +25,8 @@ public class MyLending {
     }
 
     public void clickSell() {
-        driver.findElement(By.xpath("//nav//a[contains(text(),'Sell')]")).click();
+        WebElement element = driver.findElement(By.xpath("//nav//a[contains(text(),'Sell')]"));
+        aWaiter(driver).clickAndWaitForAjaxToComplete(element);
     }
 
     public void clickLogout() {
@@ -39,8 +40,10 @@ public class MyLending {
         }
     }
 
+    // div id=main
     public void clickTransferMoney() {
-        driver.findElement(By.xpath("//nav//a[contains(text(),'Transfer money')]")).click();
+        WebElement element = driver.findElement(By.xpath("//nav//a[contains(text(),'Transfer money')]"));
+        aWaiter(driver).clickAndWaitForNewBody(element);
     }
 
     public double determineAvailableFunds() {

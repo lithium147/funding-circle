@@ -8,8 +8,6 @@ Feature: Sell Loan Parts
     Given i answer the secret question for "<profile>"
     Given i accept the conditions
 
-#  @Implemented
-#  Scenario: sell parts for 0.3%
     Given i goto sell view
     Given i goto sell individually view
     Given there are items to sell
