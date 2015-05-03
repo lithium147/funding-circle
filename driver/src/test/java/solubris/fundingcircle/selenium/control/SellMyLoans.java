@@ -3,8 +3,7 @@ package solubris.fundingcircle.selenium.control;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import solubris.fundingcircle.selenium.IFrameExistsCondition;
+import solubris.fundingcircle.selenium.IframeExistsCondition;
 import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
 import java.text.DecimalFormat;
@@ -29,7 +28,7 @@ public class SellMyLoans {
 
     public void clickSellIndividually() throws InterruptedException {
         WebElement element = driver.findElement(By.xpath("//a[contains(text(),'Sell Individually')]"));
-        IFrameExistsCondition iFrameExistsCondition = new IFrameExistsCondition("sell-individual-loan-parts");
+        IframeExistsCondition iFrameExistsCondition = new IframeExistsCondition("sell-individual-loan-parts");
         WebElement sellLoanPartsFrame = aWaiter(driver).clickAndWaitForCondition(element, iFrameExistsCondition);
         driver.switchTo().frame(sellLoanPartsFrame);
 
