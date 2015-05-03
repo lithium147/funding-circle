@@ -22,12 +22,15 @@ import java.util.concurrent.TimeUnit;
  * Utility class for waiting for elements
  */
 public class Waiter {
+    public static final int DEFAULT_TIME_OUT_IN_SECONDS = 10;
+    public static final int DEFAULT_SLEEP_IN_MILLIS = 10;
+
     private final WebDriver driver;
     private WebDriverWait driverWait;
 
     public Waiter(WebDriver driver) {
         this.driver = driver;
-        driverWait = new WebDriverWait(driver, 10, 100);
+        driverWait = new WebDriverWait(driver, DEFAULT_TIME_OUT_IN_SECONDS, DEFAULT_SLEEP_IN_MILLIS);
     }
 
     public Waiter(WebDriverProvider webDriverProvider) {
@@ -40,7 +43,7 @@ public class Waiter {
     }
 
     public List<WebElement> findVisibleWebElements(By by) {
-		return findVisibleWebElements(by,  10);
+		return findVisibleWebElements(by,  DEFAULT_TIME_OUT_IN_SECONDS);
     }
 
 	public List<WebElement> findVisibleWebElements(By by, int timeOutInSeconds) {
@@ -53,7 +56,7 @@ public class Waiter {
 		} catch (TimeoutException toe) {
 			return null;
 		} finally {
-			driverWait.withTimeout(10, TimeUnit.SECONDS);
+			driverWait.withTimeout(DEFAULT_TIME_OUT_IN_SECONDS, TimeUnit.SECONDS);
 		}
 		return webElements;
 	}
@@ -62,8 +65,8 @@ public class Waiter {
         return eventuallyMeetsCondition(callable, Predicates.<T>notNull());
     }
 
-    private static final Duration defaultTimeout = Duration.ofSeconds(10);
-    private static final Duration defaultInterval = Duration.ofMillis(100);
+    private static final Duration defaultTimeout = Duration.ofSeconds(DEFAULT_TIME_OUT_IN_SECONDS);
+    private static final Duration defaultInterval = Duration.ofMillis(DEFAULT_SLEEP_IN_MILLIS);
 
     public static <T> T eventuallyMeetsCondition(Callable<T> callable, Predicate<T> condition) throws Exception {
         Instant endTime = Instant.now().plus(defaultTimeout);
@@ -101,7 +104,7 @@ public class Waiter {
         condition.prepare(driver);
 
         elementToClick.click();
-        driverWait.withTimeout(20, TimeUnit.SECONDS).until(condition);
+        driverWait.until(condition);
     }
 
     public void clickAndWaitForNewBody(WebElement elementToClick) {
@@ -109,7 +112,7 @@ public class Waiter {
         condition.prepare(driver);
 
         elementToClick.click();
-        driverWait.withTimeout(20, TimeUnit.SECONDS).until(condition);
+        driverWait.until(condition);
     }
 
     public void clickAndWaitForAjaxToComplete(WebElement elementToClick) {
@@ -120,9 +123,9 @@ public class Waiter {
 
     public void waitForAjaxToComplete() {
         AjaxConnectionsCondition condition = new AjaxConnectionsCondition(1);
-        driverWait.withTimeout(20, TimeUnit.SECONDS).until(condition);
+        driverWait.until(condition);
         condition = new AjaxConnectionsCondition(0);
-        driverWait.withTimeout(20, TimeUnit.SECONDS).until(condition);
+        driverWait.until(condition);
     }
 
     public static Waiter aWaiter(WebDriver driver) {
@@ -134,16 +137,16 @@ public class Waiter {
         condition.prepare(driver);
 
         elementToClick.click();
-        driverWait.withTimeout(20, TimeUnit.SECONDS).until(condition);
+        driverWait.until(condition);
     }
 
     public void clickAndWaitForCondition(WebElement elementToClick, Predicate<WebDriver> predicate) {
         elementToClick.click();
-        driverWait.withTimeout(20, TimeUnit.SECONDS).until(predicate);
+        driverWait.until(predicate);
     }
 
     public WebElement clickAndWaitForCondition(WebElement elementToClick, ExpectedCondition<WebElement> condition) {
         elementToClick.click();
-        return driverWait.withTimeout(20, TimeUnit.SECONDS).until(condition);
+        return driverWait.until(condition);
     }
 }

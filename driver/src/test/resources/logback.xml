@@ -1,0 +1,22 @@
+<configuration>
+<!-- http://logback.qos.ch/manual/configuration.html http://logback.qos.ch/manual/appenders.html -->
+  <!-- support for jul through logback: http://logback.qos.ch/manual/configuration.html#LevelChangePropagator -->
+  <!-- NOTE: seems to all logging to the root level, so very effective -->
+  <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %.-3level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="org.hibernate.SQL" level="warn" additivity="false">
+    <appender-ref ref="STDOUT" />
+  </logger>
+
+  <root level="info">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>
