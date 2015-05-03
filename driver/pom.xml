@@ -18,7 +18,6 @@
         <tomcat.log4j>file:///${main.basedir}/functionaltest-cucumber/src/test/resources/log4j.xml</tomcat.log4j>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <groovy.version>1.8.8</groovy.version>
     </properties>
 
     <profiles>
@@ -34,12 +33,6 @@
     </profiles>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>javax.mail</groupId>-->
-            <!--<artifactId>mail</artifactId>-->
-            <!--<version>1.4.3</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -120,6 +113,10 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-remote-driver</artifactId>
+        </dependency>
+        <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
             <scope>test</scope>
@@ -157,6 +154,11 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>phantomjsdriver</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

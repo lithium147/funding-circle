@@ -26,7 +26,8 @@ public class MyLending {
 
     public void clickSell() {
         WebElement element = driver.findElement(By.xpath("//nav//a[contains(text(),'Sell')]"));
-        aWaiter(driver).clickAndWaitForAjaxToComplete(element);
+//        aWaiter(driver).clickAndWaitForAjaxToComplete(element);
+        aWaiter(driver).clickAndWaitForNewBody(element);
     }
 
     public void clickLogout() {
@@ -51,4 +52,3 @@ public class MyLending {
         return Double.parseDouble(asString);
     }
 }
-//*[@id="avail-funds-menu"]/li/span/span
