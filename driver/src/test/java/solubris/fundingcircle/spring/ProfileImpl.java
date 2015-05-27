@@ -1,11 +1,6 @@
 package solubris.fundingcircle.spring;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 public class ProfileImpl implements Profile {
 
@@ -20,6 +15,9 @@ public class ProfileImpl implements Profile {
 
     @Value("${answers}")
     private String []answers;
+
+    @Value("${loanPremiums}")
+    private String [] loanPremiums;
 
     @Value("${accountName}")
     private String accountName;
@@ -51,6 +49,11 @@ public class ProfileImpl implements Profile {
     }
 
     @Override
+    public String[] getLoanPremiums() {
+        return loanPremiums;
+    }
+
+    @Override
     public String getAccountName() {
         return accountName;
     }
@@ -63,5 +66,18 @@ public class ProfileImpl implements Profile {
     @Override
     public long getSortCode() {
         return sortCode;
+    }
+
+    @Override
+    public Float getPremiumForLoanId(long l) {
+        for (String loanPartPremium : loanPremiums) {
+            String[] s = loanPartPremium.split(":", 2);
+            long loanId = Long.parseLong(s[0]);
+            if(loanId == l) {
+                return Float.parseFloat(s[1]);
+            }
+        }
+
+        return null;
     }
 }

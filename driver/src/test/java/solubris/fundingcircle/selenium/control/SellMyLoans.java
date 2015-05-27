@@ -52,6 +52,11 @@ public class SellMyLoans {
         throw new IllegalStateException("could not find premium " + premium + " for row " + row);
     }
 
+    public long determineLoanIdFor(int row) {
+        String value = driver.findElement(By.xpath("//*[@id='loanpart-table']//tbody//tr[" + row + "]/td[@ng-bind='loanPart.auction_id']")).getText();
+        return Long.parseLong(value);
+    }
+
     public void selectSell(int row) {
         WebElement element = driver.findElement(By.xpath("//*[@id='loanpart-table']//tbody//tr[" + row + "]//input[@type='checkbox']"));
         element.click();

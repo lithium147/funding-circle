@@ -20,9 +20,13 @@ public interface Profile {
         return getAnswers()[i];
     }
 
+    String[] getLoanPremiums();
+
     String getAccountName();
 
     long getAccountNumber();
 
     long getSortCode();
+
+    Float getPremiumForLoanId(long l);
 }

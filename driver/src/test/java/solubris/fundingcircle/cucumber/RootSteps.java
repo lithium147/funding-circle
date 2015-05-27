@@ -2,19 +2,13 @@ package solubris.fundingcircle.cucumber;
 
 import com.google.common.base.Joiner;
 import cucumber.api.PendingException;
-import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import solubris.fundingcircle.util.MailService;
-import solubris.fundingcircle.spring.AppConfig;
 import solubris.fundingcircle.spring.Profile;
 import solubris.fundingcircle.selenium.control.*;
 import solubris.fundingcircle.util.BaseSteps;
@@ -111,7 +105,7 @@ public class RootSteps extends BaseSteps {
         }
     }
 
-    @Given("^i select a premium of ([0-9.]+) for all records in the view$")
+    @Given("^i choose a premium of (-?[0-9.]+) for all records in the view and select these records$")
     public void i_select_a_premium_of_for_all_records_in_the_view(float premium) throws Throwable {
         SellMyLoans sellMyLoans = new SellMyLoans(this);
         int rowCount = sellMyLoans.determineRowCount();
@@ -122,6 +116,26 @@ public class RootSteps extends BaseSteps {
 
         for (int i = 1; i <= rowCount; i++) {
             i_select_a_premium_of_for_record(premium, i);
+        }
+    }
+
+
+    @Given("^i choose appropriate premiums for loan parts defined by \"([^\"]*)\"$")
+    public void i_choose_appropriate_premiums_for_loan_parts_defined_by(String profile) throws Throwable {
+        SellMyLoans sellMyLoans = new SellMyLoans(this);
+        int rowCount = sellMyLoans.determineRowCount();
+
+        if (rowCount <= 0) {
+            throw new IllegalStateException("could not find any records in view");
+        }
+
+        for (int row = 1; row <= rowCount; row++) {
+            long loanPartId = sellMyLoans.determineLoanIdFor(row);
+            Float premium = config.get(profile).getPremiumForLoanId(loanPartId);
+            if(premium != null) {
+                sellMyLoans.selectPremium(premium, row);
+//                sellMyLoans1.selectSell(row);
+            }
         }
     }
 
