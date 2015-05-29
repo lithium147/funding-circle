@@ -46,6 +46,9 @@ public class SellMyLoans {
             if(element.getText().contains(premium + "%")) {
                 element.click();
                 return;
+            } else if(premium == 0 && element.getText().contains("0%")) {
+                element.click();
+                return;
             }
         }
 
