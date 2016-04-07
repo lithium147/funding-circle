@@ -2,8 +2,11 @@ package solubris.fundingcircle.selenium.control;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 import solubris.fundingcircle.spring.Profile;
+
+import static solubris.fundingcircle.selenium.Waiter.aWaiter;
 
 public class LoginPage2 {
 	private final WebDriver driver;
@@ -15,7 +18,8 @@ public class LoginPage2 {
     }
 
 	public void clickSubmit() {
-        driver.findElement(By.xpath("//form[@name='securityQuestions']//button[@type='submit']")).click();
+        WebElement element = driver.findElement(By.xpath("//form[@name='securityQuestions']//button[@type='submit']"));
+        aWaiter(driver).clickAndWaitForNewBody(element);
 	}
 
     public void answerQuestion() {

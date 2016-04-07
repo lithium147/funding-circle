@@ -12,7 +12,7 @@ Feature: Sell Loan Parts
     Given i goto sell individually view
     Given there are items to sell
     Given i select 250 items per page
-    Given i choose a premium of 0.3 for all records in the view and select these records
+    Given i choose a premium of 1.3 for all records in the view and select these records
     Given i choose appropriate premiums for loan parts defined by "<profile>"
     Given i sell the selected parts
 
