@@ -48,7 +48,9 @@ public class MyLending {
     }
 
     public double determineAvailableFunds() {
-        String asString = driver.findElement(By.xpath("//*[@id='avail-funds-menu']//span[@class='val']")).getText().substring(1);
+//        String asString = driver.findElement(By.xpath("//*[@id='avail-funds-menu']//span[@class='val']")).getText().substring(1);
+        String asString = driver.findElement(By.xpath("//span[@class='header__user-funds']")).getText();
+        asString = asString.replace("Available funds £", "");
         asString = asString.replace(",", "");
         return Double.parseDouble(asString);
     }

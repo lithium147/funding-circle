@@ -8,6 +8,7 @@ import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static solubris.fundingcircle.selenium.Waiter.aWaiter;
 
 /**
  * Created by eeo2 on 14/09/2014.
@@ -20,7 +21,8 @@ public class TransferMoney {
     }
 
     public void clickTransferOut() throws InterruptedException {
-        driver.findElement(By.xpath("//a[contains(text(),'Transfer out')]")).click();
+        WebElement element = driver.findElement(By.xpath("//a[contains(text(),'Transfer out')]"));
+        aWaiter(driver).clickAndWaitForNewBody(element);
     }
 
     public void clickTransferFunds() {
