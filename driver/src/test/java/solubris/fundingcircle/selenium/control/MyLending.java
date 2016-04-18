@@ -8,6 +8,7 @@ import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
 import java.util.List;
 
+import static org.openqa.selenium.By.xpath;
 import static solubris.fundingcircle.selenium.Waiter.aWaiter;
 
 public class MyLending {
@@ -25,13 +26,12 @@ public class MyLending {
     }
 
     public void clickSell() {
-        WebElement element = driver.findElement(By.xpath("//nav//a[contains(text(),'Sell')]"));
-//        aWaiter(driver).clickAndWaitForAjaxToComplete(element);
-        aWaiter(driver).clickAndWaitForNewBody(element);
+        //        aWaiter(driver).clickAndWaitForAjaxToComplete(element);
+        aWaiter(driver).clickAndWaitForNewBody(xpath("//nav//a[contains(text(),'Sell')]"));
     }
 
     public void clickLogout() {
-        driver.findElement(By.xpath("//nav//a[contains(text(),'Sign out')]")).click();
+        driver.findElement(xpath("//nav//a[contains(text(),'Sign out')]")).click();
     }
 
     public void clickSubMenu() {
@@ -43,13 +43,12 @@ public class MyLending {
 
     // div id=main
     public void clickTransferMoney() {
-        WebElement element = driver.findElement(By.xpath("//nav//a[contains(text(),'Transfer money')]"));
-        aWaiter(driver).clickAndWaitForNewBody(element);
+        aWaiter(driver).clickAndWaitForNewBody(xpath("//nav//a[contains(text(),'Transfer money')]"));
     }
 
     public double determineAvailableFunds() {
 //        String asString = driver.findElement(By.xpath("//*[@id='avail-funds-menu']//span[@class='val']")).getText().substring(1);
-        String asString = driver.findElement(By.xpath("//span[@class='header__user-funds']")).getText();
+        String asString = driver.findElement(xpath("//span[@class='header__user-funds']")).getText();
         asString = asString.replace("Available funds £", "");
         asString = asString.replace(",", "");
         return Double.parseDouble(asString);

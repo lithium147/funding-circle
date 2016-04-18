@@ -115,6 +115,10 @@ public class Waiter {
         driverWait.until(condition);
     }
 
+    public void clickAndWaitForNewBody(By by) {
+        clickAndWaitForNewBody(driver.findElement(by));
+    }
+
     public void clickAndWaitForAjaxToComplete(WebElement elementToClick) {
         elementToClick.click();
 
