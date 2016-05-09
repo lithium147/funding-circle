@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static solubris.fundingcircle.selenium.Waiter.aWaiter;
@@ -40,19 +41,25 @@ public class SellMyLoans {
 //        driver.switchTo().frame(1);
     }
 
-    public void selectPremium(float premium, int row) {
+    public void selectPremium(Float premium, int row) {
+        String premiumStr = formattedPremiumWithoutDecimalForWholeNumbers(premium);
         List<WebElement> elements = driver.findElements(By.xpath("//*[@id='loanpart-table']//tbody//tr[" + row + "]//select/option"));
-        for (WebElement element : elements) {
-            if(element.getText().contains(premium + "%")) {
-                element.click();
-                return;
-            } else if(premium == 0 && element.getText().contains("0%")) {
-                element.click();
-                return;
-            }
+        final String finalPremiumStr = premiumStr;
+        Optional<WebElement> element = elements.stream().filter(e -> e.getText().equalsIgnoreCase(finalPremiumStr)).findFirst();
+        if(element.isPresent()) {
+            element.get().click();
+        } else {
+            throw new IllegalStateException("could not find premium " + premium + " for row " + row);
         }
+    }
 
-        throw new IllegalStateException("could not find premium " + premium + " for row " + row);
+    private String formattedPremiumWithoutDecimalForWholeNumbers(Float premium) {
+        int premiumInt = premium.intValue();
+        String premiumStr = "" + premium;
+        if(premium == premiumInt) {
+            premiumStr = "" + premiumInt;
+        }
+        return premiumStr + "%";
     }
 
     public long determineLoanIdFor(int row) {
