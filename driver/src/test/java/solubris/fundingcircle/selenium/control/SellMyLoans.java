@@ -42,15 +42,12 @@ public class SellMyLoans {
     }
 
     public void selectPremium(Float premium, int row) {
-        String premiumStr = formattedPremiumWithoutDecimalForWholeNumbers(premium);
-        List<WebElement> elements = driver.findElements(By.xpath("//*[@id='loanpart-table']//tbody//tr[" + row + "]//select/option"));
-        final String finalPremiumStr = premiumStr;
-        Optional<WebElement> element = elements.stream().filter(e -> e.getText().equalsIgnoreCase(finalPremiumStr)).findFirst();
-        if(element.isPresent()) {
-            element.get().click();
-        } else {
-            throw new IllegalStateException("could not find premium " + premium + " for row " + row);
-        }
+        final String finalPremiumStr = formattedPremiumWithoutDecimalForWholeNumbers(premium);
+        driver.findElements(By.xpath("//*[@id='loanpart-table']//tbody//tr[" + row + "]//select/option"))
+                .stream()
+                .filter(e -> e.getText().equalsIgnoreCase(finalPremiumStr))
+                .findFirst().orElseThrow(() -> new IllegalStateException("could not find premium " + premium + " for row " + row))
+                .click();
     }
 
     private String formattedPremiumWithoutDecimalForWholeNumbers(Float premium) {
