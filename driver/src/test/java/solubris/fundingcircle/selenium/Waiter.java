@@ -153,4 +153,13 @@ public class Waiter {
         elementToClick.click();
         return driverWait.until(condition);
     }
+
+    public void clickAndWaitForFixedTime(WebElement elementToClick, long millis) {
+        elementToClick.click();
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
