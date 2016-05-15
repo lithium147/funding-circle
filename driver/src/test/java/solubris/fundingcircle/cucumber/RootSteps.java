@@ -143,7 +143,6 @@ public class RootSteps extends BaseSteps {
     public void i_select_items_per_page(int items) throws Throwable {
         SellMyLoans sellMyLoans = new SellMyLoans(this);
         sellMyLoans.selectItemsPerPage(items);
-        Thread.sleep(5000);
     }
 
     @Given("^there are items to sell$")
@@ -239,5 +238,38 @@ public class RootSteps extends BaseSteps {
     public void i_have_available_funds_between_£_and_£(int min, int max) throws Throwable {
         MyLending myLending = new MyLending(this);
         assertThat(myLending.determineAvailableFunds()).isGreaterThan(min).isLessThan(max).as("Must have available funds");
+    }
+
+    @Given("^i goto loan parts for sale view$")
+    public void i_goto_loan_parts_for_sale_view() throws Throwable {
+        SellMyLoans sellMyLoans = new SellMyLoans(this);
+        sellMyLoans.clickLoanPartsForSale();
+    }
+
+    @Given("^there are items on sale$")
+    public void there_are_items_on_sale() throws Throwable {
+        SellMyLoans sellMyLoans = new SellMyLoans(this);
+        assertThat(sellMyLoans.determineRowCount()).isNotEqualTo(0).as("There must be items on sale");
+    }
+
+    @Given("^i select delist for all records in the view$")
+    public void i_select_delist_for_all_records_in_the_view() throws Throwable {
+        SellMyLoans sellMyLoans = new SellMyLoans(this);
+        int rowCount = sellMyLoans.determineRowCount();
+
+        if (rowCount <= 0) {
+            throw new IllegalStateException("could not find any records in view");
+        }
+
+        for (int i = 1; i <= rowCount; i++) {
+            sellMyLoans.selectDelist(i);
+        }
+    }
+
+    @Given("^i delist the selected parts$")
+    public void i_delist_the_selected_parts() throws Throwable {
+        SellMyLoans sellMyLoans = new SellMyLoans(this);
+        sellMyLoans.clickDelistLoanParts();
+        sellMyLoans.clickAccept();
     }
 }

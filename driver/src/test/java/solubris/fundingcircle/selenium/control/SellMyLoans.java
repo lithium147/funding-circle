@@ -1,8 +1,12 @@
 package solubris.fundingcircle.selenium.control;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import solubris.fundingcircle.selenium.IFrameExistsCondition;
 import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
@@ -12,9 +16,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static org.openqa.selenium.By.xpath;
+import static org.openqa.selenium.support.ui.ExpectedConditions.frameToBeAvailableAndSwitchToIt;
 import static solubris.fundingcircle.selenium.Waiter.aWaiter;
 
 /**
@@ -39,6 +46,16 @@ public class SellMyLoans {
 //        aWaiter(driver).clickAndWaitForCondition(element, driver -> "active".equals(iframeWrapper.getAttribute("class")));
 //        driver.switchTo().frame("sell-individual-loan-parts");
 //        driver.switchTo().frame(1);
+    }
+
+    public void clickLoanPartsForSale() {
+        WebElement element = driver.findElement(By.xpath("//a[contains(text(),'Loan Parts for Sale')]"));
+        aWaiter(driver).clickAndWaitForCondition(element, frameToBeAvailableAndSwitchToIt(By.xpath(".//*[@id='selling']/iframe")));
+    }
+
+    public void clickLoanPartsSold() {
+        driver.findElement(By.xpath("//a[contains(text(),'Loan Parts Sold')]")).click();
+        this.driver.switchTo().frame(1);
     }
 
     public void selectPremium(Float premium, int row) {
@@ -69,6 +86,16 @@ public class SellMyLoans {
         element.click();
     }
 
+    public void selectDelist(int row) {
+        WebElement element = driver.findElement(By.xpath("//*[@id='loanpart-table']//tbody//tr[" + row + "]//input[@type='checkbox']"));
+        element.click();
+    }
+
+    public void clickDelistLoanParts() {
+        WebElement element = driver.findElement(By.xpath("//*[@id='loanpart-table']/button[contains(text(),'De-list loan parts')]"));
+        element.click();
+    }
+
     public void clickSellLoanParts() {
         WebElement element = driver.findElement(By.xpath("//*[@id='loanpart-header']/button[@name='sell-individual-loan-parts']"));
         element.click();
@@ -79,20 +106,16 @@ public class SellMyLoans {
     }
 
     public void selectItemsPerPage(int items) {
-        List<WebElement> elements = driver.findElements(By.xpath("//*[@id='loanpart-table']/*[@class='loanparts-perpage']/select/option"));
-        for (WebElement element : elements) {
-            if(element.getText().equals("" + items)) {
-                element.click();
-                return;
-            }
-        }
-
-        throw new IllegalStateException("could not find page size option " + items);
+        WebElement element = findOptionForItemsPerPage(items);
+        aWaiter(driver).clickAndWaitForFixedTime(element, 5000l);
+        // TODO Wait for ajax to complete
     }
 
-    public void clickLoanPartsSold() {
-        driver.findElement(By.xpath("//a[contains(text(),'Loan Parts Sold')]")).click();
-        this.driver.switchTo().frame(1);
+    private WebElement findOptionForItemsPerPage(int items) {
+        return driver.findElements(By.xpath("//*[@id='loanpart-table']/*[@class='loanparts-perpage']/select/option"))
+                .stream()
+                .filter(e -> e.getText().equals("" + items))
+                .findFirst().orElseThrow(() -> new IllegalStateException("could not find page size option " + items));
     }
 
     public void clickTimeSoldColumn() {
@@ -148,5 +171,9 @@ public class SellMyLoans {
 
     private By xpathForBindElement(final String varName) {
         return By.xpath("//*[contains(@ng-bind,'" + varName + "')]");
+    }
+
+    public void clickAccept() {
+        driver.switchTo().alert().accept();
     }
 }

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 public class IFrameExistsCondition implements ExpectedCondition<WebElement> {
-    private static final Logger logger = LoggerFactory.getLogger(AjaxConnectionsCondition.class);
+    private static final Logger logger = LoggerFactory.getLogger(IFrameExistsCondition.class);
 
     private final String id;
 

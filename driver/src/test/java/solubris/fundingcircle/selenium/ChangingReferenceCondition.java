@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * only return the new element when the reference changes
  */
 class ChangingReferenceCondition implements ExpectedCondition<WebElement> {
-    private static final Logger logger = LoggerFactory.getLogger(AjaxConnectionsCondition.class);
+    private static final Logger logger = LoggerFactory.getLogger(ChangingReferenceCondition.class);
 
     private final By by;
     private WebElement before;

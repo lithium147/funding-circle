@@ -149,7 +149,7 @@ public class Waiter {
         driverWait.until(predicate);
     }
 
-    public WebElement clickAndWaitForCondition(WebElement elementToClick, ExpectedCondition<WebElement> condition) {
+    public <T> T clickAndWaitForCondition(WebElement elementToClick, ExpectedCondition<T> condition) {
         elementToClick.click();
         return driverWait.until(condition);
     }
