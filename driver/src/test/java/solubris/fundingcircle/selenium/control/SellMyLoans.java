@@ -93,7 +93,7 @@ public class SellMyLoans {
 
     public void clickDelistLoanParts() {
         WebElement element = driver.findElement(By.xpath("//*[@id='loanpart-table']/button[contains(text(),'De-list loan parts')]"));
-        element.click();
+        aWaiter(driver).clickAndWaitForCondition(element, ExpectedConditions.alertIsPresent());
     }
 
     public void clickSellLoanParts() {
