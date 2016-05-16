@@ -8,8 +8,8 @@ Feature: Sell Loan Parts
 
     Given i goto sell view
     Given i goto loan parts for sale view
-    Given i select 250 items per page
     Given there are items on sale
+    Given i select 250 items per page
     Given i select delist for all records in the view
     Given i delist the selected parts
 
