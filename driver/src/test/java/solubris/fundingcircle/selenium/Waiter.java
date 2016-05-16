@@ -9,7 +9,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import solubris.fundingcircle.selenium.control.MyLending;
 import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
 import java.time.Duration;
@@ -121,7 +120,6 @@ public class Waiter {
 
     public void clickAndWaitForAjaxToComplete(WebElement elementToClick) {
         elementToClick.click();
-
         waitForAjaxToComplete();
     }
 

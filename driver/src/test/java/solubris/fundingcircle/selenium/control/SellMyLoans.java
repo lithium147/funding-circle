@@ -36,16 +36,7 @@ public class SellMyLoans {
 
     public void clickSellIndividually() throws InterruptedException {
         WebElement element = driver.findElement(By.xpath("//a[contains(text(),'Sell Individually')]"));
-        IFrameExistsCondition iFrameExistsCondition = new IFrameExistsCondition("sell-individual-loan-parts");
-        WebElement sellLoanPartsFrame = aWaiter(driver).clickAndWaitForCondition(element, iFrameExistsCondition);
-        driver.switchTo().frame(sellLoanPartsFrame);
-
-//        WebElement parent = element.findElement(By.xpath(".."));
-//        WebElement iframeWrapper = driver.findElement(By.id("sellable_bids"));
-//        aWaiter(driver).clickAndWaitForCondition(element, driver -> "active".equals(parent.getAttribute("class")));
-//        aWaiter(driver).clickAndWaitForCondition(element, driver -> "active".equals(iframeWrapper.getAttribute("class")));
-//        driver.switchTo().frame("sell-individual-loan-parts");
-//        driver.switchTo().frame(1);
+        aWaiter(driver).clickAndWaitForCondition(element, frameToBeAvailableAndSwitchToIt(By.xpath(".//*[@id='sellable_bids']/iframe")));
     }
 
     public void clickLoanPartsForSale() {
@@ -107,8 +98,7 @@ public class SellMyLoans {
 
     public void selectItemsPerPage(int items) {
         WebElement element = findOptionForItemsPerPage(items);
-        aWaiter(driver).clickAndWaitForFixedTime(element, 5000l);
-        // TODO Wait for ajax to complete
+        aWaiter(driver).clickAndWaitForAjaxToComplete(element);
     }
 
     private WebElement findOptionForItemsPerPage(int items) {

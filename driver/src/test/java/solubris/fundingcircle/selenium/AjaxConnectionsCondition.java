@@ -20,7 +20,13 @@ class AjaxConnectionsCondition implements ExpectedCondition<Boolean> {
 
     @Override
     public Boolean apply(WebDriver driver) {
-        long activeConnections = (Long)((JavascriptExecutor) driver).executeScript("return jQuery.active");
+        // XXX this agular selector might not be generic to all angular pages
+        String angularElementSelector = "document.getElementsByClassName('ng-scope')[0]";
+        long activeConnections = (Long)((JavascriptExecutor) driver).executeScript(
+                "if(window.jQuery) { return jQuery.active; }" +
+                "if(window.angular) { return angular.element(" + angularElementSelector + ").injector().get('$http').pendingRequests.length; }" +
+                "return undefined;"
+        );
         logger.debug("activeConnections = {}", activeConnections);
         return activeConnections == expectedActiveConnections;
     }

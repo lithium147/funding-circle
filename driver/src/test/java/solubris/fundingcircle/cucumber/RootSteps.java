@@ -148,7 +148,6 @@ public class RootSteps extends BaseSteps {
     @Given("^there are items to sell$")
     public void there_are_items_to_sell() throws Throwable {
         SellMyLoans sellMyLoans = new SellMyLoans(this);
-        Thread.sleep(5000);
         assertThat(sellMyLoans.determineRowCount()).isNotEqualTo(0).as("There must be items to sell");
     }
 
