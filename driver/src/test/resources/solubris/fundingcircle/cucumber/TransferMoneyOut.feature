@@ -1,6 +1,6 @@
 Feature: Transfer Money Out
 
-  @Implemented
+  @CI
   Scenario Outline: login with profile
     Given i open funding circle
     Given i enter email and password for "<profile>"

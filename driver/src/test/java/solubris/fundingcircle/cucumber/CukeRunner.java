@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 //        format = "html:target/surefire-reports",
         strict = true,
         glue = "solubris.fundingcircle.cucumber",
-        tags = "@Implemented"
+        tags = "@CI"
 )
 //, features={"classpath:solubris/fundingcircle/CheckNewSales.feature"})
 public class CukeRunner {

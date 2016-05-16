@@ -1,7 +1,5 @@
 Feature: Sell Loan Parts
 
-#  Background:
-  @Implemented
   Scenario Outline: Delist loan parts
     Given i open funding circle
     Given i enter email and password for "<profile>"

@@ -1,6 +1,5 @@
 Feature: Check For New Sales
 
-#  @Implemented
   Scenario Outline: login with profile
     Given i open funding circle
     Given i enter email and password for "<profile>"
