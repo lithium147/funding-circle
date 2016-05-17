@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        format = {"junit:target/junit.xml", "html:target/features"},
+        plugin = {"junit:target/junit.xml", "html:target/features"},
         strict = true,
         glue = "solubris.fundingcircle.cucumber",
         tags = "@CI"

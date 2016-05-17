@@ -7,18 +7,25 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import solubris.fundingcircle.util.MailService;
+import solubris.fundingcircle.selenium.control.FundingCircleWebApp;
+import solubris.fundingcircle.selenium.control.LoanPart;
+import solubris.fundingcircle.selenium.control.LoginPage1;
+import solubris.fundingcircle.selenium.control.LoginPage2;
+import solubris.fundingcircle.selenium.control.MyLending;
+import solubris.fundingcircle.selenium.control.SellMyLoanRow;
+import solubris.fundingcircle.selenium.control.SellMyLoans;
+import solubris.fundingcircle.selenium.control.SellMyLoansDialog;
+import solubris.fundingcircle.selenium.control.TransferMoney;
 import solubris.fundingcircle.spring.Profile;
-import solubris.fundingcircle.selenium.control.*;
 import solubris.fundingcircle.util.BaseSteps;
+import solubris.fundingcircle.util.MailService;
 
 import java.util.List;
 import java.util.Map;
 
 import static org.fest.assertions.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 
 /**
  * for spring setup followed this:
@@ -29,7 +36,7 @@ public class RootSteps extends BaseSteps {
     @Autowired
     Map<String, Profile> config;
 
-//    @Autowired
+    //    @Autowired
     MailService mailService;
 
     List<LoanPart> newlySoldParts;
@@ -82,13 +89,6 @@ public class RootSteps extends BaseSteps {
         sellMyLoans.clickSellIndividually();
     }
 
-    @Given("^i select a premium of ([0-9.]+) for record (\\d+)$")
-    public void i_select_a_premium_of_for_record(float premium, int row) throws Throwable {
-        SellMyLoans sellMyLoans = new SellMyLoans(this);
-        sellMyLoans.selectPremium(premium, row);
-        sellMyLoans.selectSell(row);
-    }
-
     @Given("^i sell the selected parts$")
     public void i_sell_the_selected_parts() throws Throwable {
         SellMyLoans sellMyLoans = new SellMyLoans(this);
@@ -98,45 +98,20 @@ public class RootSteps extends BaseSteps {
         sellMyLoansDialog.acceptTerms();
     }
 
-    @Given("^i select a premium of ([0-9.]+) for record (\\d+) to (\\d+)$")
-    public void i_select_a_premium_of_for_record_to(float premium, int rowStart, int rowEnd) throws Throwable {
-        for (int i = rowStart; i <= rowEnd; i++) {
-            i_select_a_premium_of_for_record(premium, i);
-        }
-    }
-
     @Given("^i choose a premium of (-?[0-9.]+) for all records in the view and select these records$")
     public void i_select_a_premium_of_for_all_records_in_the_view(float premium) throws Throwable {
         SellMyLoans sellMyLoans = new SellMyLoans(this);
-        int rowCount = sellMyLoans.determineRowCount();
-
-        if (rowCount <= 0) {
-            throw new IllegalStateException("could not find any records in view");
-        }
-
-        for (int i = 1; i <= rowCount; i++) {
-            i_select_a_premium_of_for_record(premium, i);
-        }
+        sellMyLoans.rows().forEach(r -> {
+            r.selectPremium(premium);
+            r.selectSell();
+        });
     }
-
 
     @Given("^i choose appropriate premiums for loan parts defined by \"([^\"]*)\"$")
     public void i_choose_appropriate_premiums_for_loan_parts_defined_by(String profile) throws Throwable {
         SellMyLoans sellMyLoans = new SellMyLoans(this);
-        int rowCount = sellMyLoans.determineRowCount();
-
-        if (rowCount <= 0) {
-            throw new IllegalStateException("could not find any records in view");
-        }
-
-        for (int row = 1; row <= rowCount; row++) {
-            long loanPartId = sellMyLoans.determineLoanIdFor(row);
-            Float premium = config.get(profile).getPremiumForLoanId(loanPartId);
-            if(premium != null) {
-                sellMyLoans.selectPremium(premium, row);
-//                sellMyLoans1.selectSell(row);
-            }
-        }
+        sellMyLoans.rows().map(r -> Pair.of(r, config.get(profile).getPremiumForLoanId(r.determineLoanId()))).filter(pair -> pair.getRight() != null)
+                .forEach(pair -> pair.getLeft().selectPremium(pair.getRight()));
     }
 
     @Given("^i select (\\d+) items per page$")
@@ -174,7 +149,7 @@ public class RootSteps extends BaseSteps {
 
     @Given("^if found, send an email notification for remembered parts$")
     public void if_found_send_an_email_notification_for_remembered_parts() throws Throwable {
-        if(newlySoldParts.size() > 0) {
+        if (newlySoldParts.size() > 0) {
             mailService.sendMail(Joiner.on("\n").join(newlySoldParts));
         }
     }
@@ -254,15 +229,7 @@ public class RootSteps extends BaseSteps {
     @Given("^i select delist for all records in the view$")
     public void i_select_delist_for_all_records_in_the_view() throws Throwable {
         SellMyLoans sellMyLoans = new SellMyLoans(this);
-        int rowCount = sellMyLoans.determineRowCount();
-
-        if (rowCount <= 0) {
-            throw new IllegalStateException("could not find any records in view");
-        }
-
-        for (int i = 1; i <= rowCount; i++) {
-            sellMyLoans.selectDelist(i);
-        }
+        sellMyLoans.rows().forEach(SellMyLoanRow::selectDelist);
     }
 
     @Given("^i delist the selected parts$")

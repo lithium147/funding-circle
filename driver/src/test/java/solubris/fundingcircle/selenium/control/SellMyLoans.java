@@ -1,13 +1,9 @@
 package solubris.fundingcircle.selenium.control;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import solubris.fundingcircle.selenium.IFrameExistsCondition;
 import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
 import java.text.DecimalFormat;
@@ -16,18 +12,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.openqa.selenium.By.xpath;
 import static org.openqa.selenium.support.ui.ExpectedConditions.frameToBeAvailableAndSwitchToIt;
+import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static solubris.fundingcircle.selenium.Waiter.aWaiter;
 
-/**
- * Created by eeo2 on 14/09/2014.
- */
-public class SellMyLoans {
+public class SellMyLoans implements WebDriverProvider {
     private final WebDriver driver;
 
     public SellMyLoans(WebDriverProvider provider) {
@@ -49,37 +42,8 @@ public class SellMyLoans {
         this.driver.switchTo().frame(1);
     }
 
-    public void selectPremium(Float premium, int row) {
-        final String finalPremiumStr = formattedPremiumWithoutDecimalForWholeNumbers(premium);
-        driver.findElements(By.xpath("//*[@id='loanpart-table']//tbody//tr[" + row + "]//select/option"))
-                .stream()
-                .filter(e -> e.getText().equalsIgnoreCase(finalPremiumStr))
-                .findFirst().orElseThrow(() -> new IllegalStateException("could not find premium " + premium + " for row " + row))
-                .click();
-    }
-
-    private String formattedPremiumWithoutDecimalForWholeNumbers(Float premium) {
-        int premiumInt = premium.intValue();
-        String premiumStr = "" + premium;
-        if(premium == premiumInt) {
-            premiumStr = "" + premiumInt;
-        }
-        return premiumStr + "%";
-    }
-
-    public long determineLoanIdFor(int row) {
-        String value = driver.findElement(By.xpath("//*[@id='loanpart-table']//tbody//tr[" + row + "]/td[@ng-bind='loanPart.auction_id']")).getText();
-        return Long.parseLong(value);
-    }
-
-    public void selectSell(int row) {
-        WebElement element = driver.findElement(By.xpath("//*[@id='loanpart-table']//tbody//tr[" + row + "]//input[@type='checkbox']"));
-        element.click();
-    }
-
-    public void selectDelist(int row) {
-        WebElement element = driver.findElement(By.xpath("//*[@id='loanpart-table']//tbody//tr[" + row + "]//input[@type='checkbox']"));
-        element.click();
+    public Stream<SellMyLoanRow> rows() {
+        return driver.findElements(By.xpath("//*[@id='loanpart-table']//tbody//tr")).stream().map(SellMyLoanRow::new);
     }
 
     public void clickDelistLoanParts() {
@@ -89,7 +53,7 @@ public class SellMyLoans {
 
     public void clickSellLoanParts() {
         WebElement element = driver.findElement(By.xpath("//*[@id='loanpart-header']/button[@name='sell-individual-loan-parts']"));
-        element.click();
+        aWaiter(driver).clickAndWaitForCondition(element, ExpectedConditions.presenceOfElementLocated(By.className("ngdialog-open")));
     }
 
     public int determineRowCount() {
@@ -165,5 +129,10 @@ public class SellMyLoans {
 
     public void clickAccept() {
         driver.switchTo().alert().accept();
+    }
+
+    @Override
+    public WebDriver getWebDriver() {
+        return driver;
     }
 }
