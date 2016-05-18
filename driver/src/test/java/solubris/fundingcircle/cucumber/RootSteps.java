@@ -102,6 +102,7 @@ public class RootSteps extends BaseSteps {
     public void i_select_a_premium_of_for_all_records_in_the_view(float premium) throws Throwable {
         SellMyLoans sellMyLoans = new SellMyLoans(this);
         sellMyLoans.rows().forEach(r -> {
+            r.dismissAlertIfPresent(this);
             r.selectPremium(premium);
             r.selectSell();
         });
@@ -111,7 +112,11 @@ public class RootSteps extends BaseSteps {
     public void i_choose_appropriate_premiums_for_loan_parts_defined_by(String profile) throws Throwable {
         SellMyLoans sellMyLoans = new SellMyLoans(this);
         sellMyLoans.rows().map(r -> Pair.of(r, config.get(profile).getPremiumForLoanId(r.determineLoanId()))).filter(pair -> pair.getRight() != null)
-                .forEach(pair -> pair.getLeft().selectPremium(pair.getRight()));
+                .forEach(pair -> {
+                    pair.getLeft().dismissAlertIfPresent(this);
+                    pair.getLeft().selectPremium(pair.getRight());
+                    pair.getLeft().selectSell();
+                });
     }
 
     @Given("^i select (\\d+) items per page$")
