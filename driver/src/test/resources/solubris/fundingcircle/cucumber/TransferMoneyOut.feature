@@ -1,7 +1,7 @@
 Feature: Transfer Money Out
 
   @CI
-  Scenario Outline: login with profile
+  Scenario Outline: Transfer Money Out
     Given i open funding circle
     Given i enter email and password for "<profile>"
     Given i answer the secret question for "<profile>"

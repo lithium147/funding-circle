@@ -1,4 +1,4 @@
-Feature: Sell Loan Parts
+Feature: Delist loan parts
 
   Scenario Outline: Delist loan parts
     Given i open funding circle

@@ -2,7 +2,7 @@ Feature: Sell Loan Parts
 
 #  Background:
   @CI
-  Scenario Outline: login with profile
+  Scenario Outline: Sell Loan Parts
     Given i open funding circle
     Given i enter email and password for "<profile>"
     Given i answer the secret question for "<profile>"

@@ -1,6 +1,6 @@
 Feature: Check For New Sales
 
-  Scenario Outline: login with profile
+  Scenario Outline: Check For New Sales
     Given i open funding circle
     Given i enter email and password for "<profile>"
     Given i answer the secret question for "<profile>"
