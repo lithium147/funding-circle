@@ -9,7 +9,7 @@ Feature: Transfer Money Out
 
     Given i goto transfer money
     Given i goto transfer out
-    Given i have available funds between £20 and £300
+    Given i have available funds between £20 and £1000
     When i enter the available funds in the amount
     And i enter account details for "<profile>"
     And i click to transfer funds
