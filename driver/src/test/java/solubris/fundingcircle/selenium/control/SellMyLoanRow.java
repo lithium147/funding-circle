@@ -3,6 +3,7 @@ package solubris.fundingcircle.selenium.control;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.UnhandledAlertException;
+import org.openqa.selenium.UnsupportedCommandException;
 import org.openqa.selenium.WebElement;
 import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
@@ -60,10 +61,9 @@ public class SellMyLoanRow {
             row.findElement(By.xpath(".//select/option")).getText();
             Thread.sleep(2000);
             provider.getWebDriver().switchTo().alert().accept();
-        } catch (UnhandledAlertException | NoAlertPresentException e) {
-//            e.printStackTrace();
+        } catch (UnhandledAlertException | NoAlertPresentException | UnsupportedCommandException ignored) {
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }

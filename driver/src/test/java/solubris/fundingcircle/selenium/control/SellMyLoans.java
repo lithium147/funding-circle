@@ -12,12 +12,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.openqa.selenium.support.ui.ExpectedConditions.frameToBeAvailableAndSwitchToIt;
-import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static solubris.fundingcircle.selenium.Waiter.aWaiter;
 
 public class SellMyLoans implements WebDriverProvider {
@@ -30,6 +28,7 @@ public class SellMyLoans implements WebDriverProvider {
     public void clickSellIndividually() throws InterruptedException {
         WebElement element = driver.findElement(By.xpath("//a[contains(text(),'Sell Individually')]"));
         aWaiter(driver).clickAndWaitForCondition(element, frameToBeAvailableAndSwitchToIt(By.xpath(".//*[@id='sellable_bids']/iframe")));
+        aWaiter(driver).sleep(1000);
     }
 
     public void clickLoanPartsForSale() {
