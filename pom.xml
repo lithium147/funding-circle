@@ -15,6 +15,12 @@
         <maven>3.0.4</maven>
     </prerequisites>
 
+    <scm>
+        <url>https://github.com/solubris/funding-circle</url>
+        <connection>scm:git:git://github.com/solubris/funding-circle.git</connection>
+        <developerConnection>scm:git:git@github.com:solubris/funding-circle.git</developerConnection>
+    </scm>
+
     <properties>
         <main.basedir>${project.basedir}</main.basedir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -100,7 +106,7 @@
             <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
-                <version>2.9.3</version>
+                <version>2.9.4</version>
             </dependency>
             <dependency>
                 <groupId>commons-codec</groupId>
@@ -129,7 +135,7 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>2.0.52-beta</version>
+                <version>2.0.54-beta</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
