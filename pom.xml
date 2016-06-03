@@ -17,8 +17,8 @@
 
     <scm>
         <url>https://github.com/solubris/funding-circle</url>
-        <connection>scm:git:ssh://git@github.com:solubris/funding-circle.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:solubris/funding-circle.git</developerConnection>
+        <connection>scm:git:https://github.com/solubris/funding-circle.git</connection>
+        <developerConnection>scm:git:https://github.com/solubris/funding-circle.git</developerConnection>
     </scm>
 
     <properties>
