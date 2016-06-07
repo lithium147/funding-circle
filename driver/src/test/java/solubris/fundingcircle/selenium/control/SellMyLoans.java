@@ -134,4 +134,9 @@ public class SellMyLoans implements WebDriverProvider {
     public WebDriver getWebDriver() {
         return driver;
     }
+
+    public void clickWithdrawOnFirstNominatedAccount() {
+        WebElement element = driver.findElement(By.xpath("//a[contains(text(),'Withdraw')]"));
+        aWaiter(driver).clickAndWaitForNewPage(element);
+    }
 }

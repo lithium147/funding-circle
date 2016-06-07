@@ -243,4 +243,10 @@ public class RootSteps extends BaseSteps {
         sellMyLoans.clickDelistLoanParts();
         sellMyLoans.clickAccept();
     }
+
+    @Given("^i select the first nominated bank account$")
+    public void i_select_the_first_nominated_bank_account() throws Throwable {
+        SellMyLoans sellMyLoans = new SellMyLoans(this);
+        sellMyLoans.clickWithdrawOnFirstNominatedAccount();
+    }
 }

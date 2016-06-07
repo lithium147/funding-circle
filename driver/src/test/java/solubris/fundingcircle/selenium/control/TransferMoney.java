@@ -7,7 +7,6 @@ import solubris.fundingcircle.selenium.driver.WebDriverProvider;
 
 import java.util.List;
 
-import static com.google.common.collect.Lists.newArrayList;
 import static solubris.fundingcircle.selenium.Waiter.aWaiter;
 
 /**
@@ -26,14 +25,14 @@ public class TransferMoney {
     }
 
     public void clickTransferFunds() {
-        WebElement element = driver.findElement(By.xpath("//*[@id='new_transfer_out']//input[@name='commit']"));
+        WebElement element = driver.findElement(By.xpath("//*[@id='new_withdrawal']//input[@name='commit']"));
         element.click();
     }
 
 //    Thank you, your transfer request for £81.53 has been sent.
 
     public void enterAmount(double amount) {
-        driver.findElement(By.id("transfer_out_amount")).sendKeys(String.valueOf(amount));
+        driver.findElement(By.id("withdrawal_amount")).sendKeys(String.valueOf(amount));
     }
 
     public void enterAccountName(String accountName) {
@@ -49,7 +48,7 @@ public class TransferMoney {
     }
 
     public boolean hasSuccessNotification() {
-        List<WebElement> elements = driver.findElements(By.cssSelector("div.notification--success"));
+        List<WebElement> elements = driver.findElements(By.xpath("//*[contains(text(),'Transfer successful')]"));
         return elements.size() > 0;
     }
 }
