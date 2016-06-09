@@ -25,7 +25,7 @@ import solubris.fundingcircle.util.MailService;
 import java.util.List;
 import java.util.Map;
 
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * for spring setup followed this:

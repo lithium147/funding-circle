@@ -12,11 +12,10 @@ Feature: Transfer Money Out
     Given i goto transfer out
     Given i select the first nominated bank account
     When i enter the available funds in the amount
-    And i enter account details for "<profile>"
     And i click to transfer funds
     Then i have available funds equal to £0
 
   Examples:
   | profile   |
-  |  tim      |
+#  |  tim      |
   |  solubris |
