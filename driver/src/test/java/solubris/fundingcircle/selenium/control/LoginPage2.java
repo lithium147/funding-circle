@@ -18,7 +18,7 @@ public class LoginPage2 {
     }
 
 	public void clickSubmit() {
-        WebElement element = driver.findElement(By.xpath("//form[@name='securityQuestions']//button[@type='submit']"));
+        WebElement element = driver.findElement(By.xpath("//form[@action='/security-questions']//input[@type='submit']"));
         aWaiter(driver).clickAndWaitForNewBody(element);
 	}
 
@@ -28,7 +28,7 @@ public class LoginPage2 {
     }
 
     private String determineAnswer() {
-        String question = driver.findElement(By.xpath("//form[@name='securityQuestions']//label[@for='answer']")).getText();
+        String question = driver.findElement(By.xpath("//form[@action='/security-questions']//label[@for='user_input']")).getText();
         String[] knownQuestions = profile.getQuestions();
 
         for (int i = 0; i < knownQuestions.length; i++) {
@@ -41,6 +41,6 @@ public class LoginPage2 {
     }
 
     private void enterAnswer(String answer) {
-        driver.findElement(By.id("answer")).sendKeys(answer);
+        driver.findElement(By.id("user_input")).sendKeys(answer);
     }
 }
