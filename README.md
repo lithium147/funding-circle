@@ -3,6 +3,8 @@ wget http://chromedriver.storage.googleapis.com/2.15/chromedriver_mac32.zip
 unzip chromedriver_mac32.zip
 mv ~/Downloads/chromedriver /opt/
 
+https://chromedriver.storage.googleapis.com/index.html?path=2.27/
+https://chromedriver.storage.googleapis.com/2.27/chromedriver_mac64.zip
 
 ~/private/funding-circle/
 
