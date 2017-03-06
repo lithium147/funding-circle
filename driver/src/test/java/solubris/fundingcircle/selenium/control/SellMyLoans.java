@@ -27,7 +27,7 @@ public class SellMyLoans implements WebDriverProvider {
 
     public void clickSellIndividually() throws InterruptedException {
         WebElement element = driver.findElement(By.xpath("//a[contains(text(),'Sell Individually')]"));
-        aWaiter(driver).clickAndWaitForCondition(element, frameToBeAvailableAndSwitchToIt(By.xpath(".//*[@id='sellable_bids']/iframe")));
+        aWaiter(driver).clickAndWaitForCondition(element, frameToBeAvailableAndSwitchToIt(By.xpath(".//*[@id='sell_individual_loan_parts']/iframe")));
         aWaiter(driver).sleep(1000);
     }
 
