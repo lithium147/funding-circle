@@ -18,5 +18,5 @@ Feature: Sell Loan Parts
 
   Examples:
   | profile   |
-  |  tim      |
+#  |  tim      |
   |  solubris |

@@ -23,16 +23,16 @@ public class LoginPage1 {
     }
 
     public void enterEmail(String email) {
-        driver.findElement(By.id("email")).sendKeys(email);
+        driver.findElement(By.id("user_username")).sendKeys(email);
     }
 
     public void enterPassword(String password) {
-        driver.findElement(By.id("password")).sendKeys(password);
+        driver.findElement(By.id("user_password")).sendKeys(password);
 
     }
 
     public void clickSubmit() {
-        WebElement element = driver.findElement(By.xpath("//form[@name='login']/button[@type='submit']"));
+        WebElement element = driver.findElement(By.xpath("//form[@id='new_user']//input[@type='submit']"));
         aWaiter(driver).clickAndWaitForNewBody(element);
     }
 }
